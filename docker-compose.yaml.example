@@ -19,10 +19,9 @@ services:
             - ./log/traefik.log:/traefik.log
         labels:
             traefik.enable: true
-            traefik.http.middlewares.traefik-auth.basicauth.usersfile: .htpasswd
             traefik.http.routers.traefik.entrypoints: https
             traefik.http.routers.traefik.rule: Host(`traefik.domain.tld`)
-            traefik.http.routers.traefik.middlewares: default-headers@file, traefik-auth
+            traefik.http.routers.traefik.middlewares: default-headers@file, password-required@file
             traefik.http.routers.traefik.tls: true
             traefik.http.routers.traefik.tls.options: myTLSOptions@file
             traefik.http.routers.traefik.tls.certresolver: le
