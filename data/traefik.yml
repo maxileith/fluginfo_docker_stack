@@ -1,0 +1,40 @@
+global:
+    checkNewVersion: true
+    sendAnonymousUsage: false
+
+api:
+    dashboard: true
+    debug: true
+
+log:
+    level: WARN
+    filePath: "/traefik.log"
+
+entryPoints:
+    http:
+        address: "0.0.0.0:80"
+        http:
+            redirections:
+                entryPoint:
+                    to: https
+                    scheme: https
+                    permanent: true
+    https:
+        address: "0.0.0.0:443"
+
+providers:
+    docker:
+        endpoint: "unix:///var/run/docker.sock"
+        network: fluginfo_net
+        exposedByDefault: false
+
+    file:
+        filename: /middleware.yml
+
+certificatesResolvers:
+    le:
+        acme:
+            email: admin@leith.de
+            storage: acme.json
+            httpChallenge:
+                entryPoint: http

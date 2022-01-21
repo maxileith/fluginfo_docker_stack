@@ -1,0 +1,80 @@
+version: "3"
+
+services:
+    traefik:
+        image: traefik:2.6
+        container_name: traefik
+        restart: always
+        networks:
+            - net
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./data/traefik.yml:/traefik.yml:ro
+            - ./data/middleware.yml:/middleware.yml:ro
+            - ./data/.htpasswd:/.htpasswd:ro
+            - ./data/acme.json:/acme.json
+            - ./log/traefik.log:/traefik.log
+        labels:
+            traefik.enable: true
+            traefik.http.middlewares.traefik-auth.basicauth.usersfile: .htpasswd
+            traefik.http.routers.traefik.entrypoints: https
+            traefik.http.routers.traefik.rule: Host(`traefik.domain.tld`)
+            traefik.http.routers.traefik.middlewares: default-headers@file, traefik-auth
+            traefik.http.routers.traefik.tls: true
+            traefik.http.routers.traefik.tls.options: myTLSOptions@file
+            traefik.http.routers.traefik.tls.certresolver: le
+            traefik.http.routers.traefik.service: api@internal
+
+    frontend:
+        image: maxileith/fluginfo-frontend:latest
+        container_name: fluginfo_frontend
+        restart: always
+        networks:
+            - net
+        environment:
+            - FLUGINFO_BACKEND_BASE_URL=https://domain.tld
+        labels:
+            traefik.enable: true
+            traefik.http.routers.fluginfo-frontend.entrypoints: https
+            traefik.http.routers.fluginfo-frontend.middlewares: default-headers@file
+            traefik.http.routers.fluginfo-frontend.rule: Host(`domain.tld`)
+            traefik.http.routers.fluginfo-frontend.tls: true
+            traefik.http.routers.fluginfo-frontend.tls.options: myTLSOptions@file
+            traefik.http.routers.fluginfo-frontend.tls.certresolver: le
+            traefik.http.routers.fluginfo-frontend.service: fluginfo-frontend
+            traefik.http.services.fluginfo-frontend.loadbalancer.server.port: 80
+        depends_on:
+            - "traefik"
+
+    backend:
+        image: maxileith/fluginfo-backend:latest
+        container_name: fluginfo_backend
+        restart: always
+        networks:
+            - net
+        environment:
+            - FLUGINFO_BACKEND_AMADEUS_API_SECRET=secret
+            - FLUGINFO_BACKEND_AIRHEX_API_KEY=key
+            - FLUGINFO_BACKEND_AMADEUS_API_KEY=key
+            - FLUGINFO_BACKEND_DEBUG=false
+            - FLUGINFO_BACKEND_DJANGO_SECRET_KEY=secret
+            - FLUGINFO_BACKEND_HOSTNAME=api.domain.tld
+            - FLUGINFO_BACKEND_FRONTEND_HOSTNAME=domain.tld
+        labels:
+            traefik.enable: true
+            traefik.http.routers.fluginfo-backend.entrypoints: https
+            traefik.http.routers.fluginfo-backend.middlewares: default-headers@file
+            traefik.http.routers.fluginfo-backend.rule: Host(`api.domain.tld`)
+            traefik.http.routers.fluginfo-backend.tls: true
+            traefik.http.routers.fluginfo-backend.tls.options: myTLSOptions@file
+            traefik.http.routers.fluginfo-backend.tls.certresolver: le
+            traefik.http.routers.fluginfo-backend.service: fluginfo-backend
+            traefik.http.services.fluginfo-backend.loadbalancer.server.port: 80
+        depends_on:
+            - "traefik"
+
+networks:
+    net:
