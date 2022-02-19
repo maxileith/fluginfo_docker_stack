@@ -34,7 +34,7 @@ providers:
 certificatesResolvers:
     le:
         acme:
-            email: admin@leith.de
+            email: mail@example.org
             storage: acme.json
             httpChallenge:
                 entryPoint: http
