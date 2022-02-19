@@ -58,8 +58,8 @@ services:
             - FLUGINFO_BACKEND_AMADEUS_API_SECRET=secret
             - FLUGINFO_BACKEND_AIRHEX_API_KEY=key
             - FLUGINFO_BACKEND_AMADEUS_API_KEY=key
+            - FLUGINFO_BACKEND_AMADEUS_PROD=false
             - FLUGINFO_BACKEND_DEBUG=false
-            - FLUGINFO_BACKEND_DJANGO_SECRET_KEY=secret
             - FLUGINFO_BACKEND_HOSTNAME=api.domain.tld
             - FLUGINFO_BACKEND_FRONTEND_HOSTNAME=domain.tld
         labels:
