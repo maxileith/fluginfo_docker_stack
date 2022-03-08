@@ -34,7 +34,7 @@ services:
         networks:
             - net
         environment:
-            - FLUGINFO_BACKEND_BASE_URL=https://domain.tld
+            - FLUGINFO_BACKEND_BASE_URL=https://api.domain.tld
         labels:
             traefik.enable: true
             traefik.http.routers.fluginfo-frontend.entrypoints: https
