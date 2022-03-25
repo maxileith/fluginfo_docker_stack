@@ -1,2 +1,3 @@
 docker-compose.yaml
 /data/traefik.yml
+*.pdf
