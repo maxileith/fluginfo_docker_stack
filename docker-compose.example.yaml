@@ -2,7 +2,7 @@ version: "3"
 
 services:
     traefik:
-        image: traefik:2.5
+        image: traefik:2.6
         container_name: traefik
         restart: always
         networks:
@@ -28,7 +28,7 @@ services:
             traefik.http.routers.traefik.service: api@internal
 
     frontend:
-        image: maxileith/fluginfo-frontend:latest
+        image: maxileith/fluginfo-frontend:v1.0
         container_name: fluginfo_frontend
         restart: always
         networks:
@@ -49,16 +49,16 @@ services:
             - "traefik"
 
     backend:
-        image: maxileith/fluginfo-backend:latest
+        image: maxileith/fluginfo-backend:v1.0
         container_name: fluginfo_backend
         restart: always
         networks:
             - net
         environment:
             - FLUGINFO_BACKEND_AMADEUS_API_SECRET=secret
-            - FLUGINFO_BACKEND_AIRHEX_API_KEY=key
             - FLUGINFO_BACKEND_AMADEUS_API_KEY=key
-            - FLUGINFO_BACKEND_AMADEUS_PROD=false
+            - FLUGINFO_BACKEND_AMADEUS_PROD=true
+            - FLUGINFO_BACKEND_AIRHEX_API_KEY=key
             - FLUGINFO_BACKEND_DEBUG=false
             - FLUGINFO_BACKEND_HOSTNAME=api.domain.tld
             - FLUGINFO_BACKEND_FRONTEND_HOSTNAME=domain.tld
