@@ -39,8 +39,8 @@ cd ./fluginfo
 Bevor die Beispielkonfiguration angepasst wird, wird diese kopiert:
 
 ```bash
-cp docker-compose.example.yaml docker-compose.yaml
-cp data/traefik.example.yml data/traefik.yml
+sudo cp docker-compose.example.yaml docker-compose.yaml
+sudo cp data/traefik.example.yml data/traefik.yml
 ```
 
 ## Docker-Compose
@@ -151,5 +151,5 @@ Anmerkung: Die CAA-Records sind optional und dienen dazu die Zertifizierungsstel
 Nun kann Fluginfo gestartet werden:
 
 ```bash
-docker-compose up
+sudo docker-compose up
 ```
