@@ -22,8 +22,8 @@ Die Tar-Balls lädt man entweder direkt auf dem Server herunter, oder auf dem lo
 Sobald die Dateien auf dem Server liegen, können die Container geladen werden:
 
 ```bash
-sudo docker load -i maxileith_fluginfo-frontend_v1.0.tar.gz
-sudo docker load -i maxileith_fluginfo-backend_v1.0.tar.gz
+sudo docker load -i /path/to/maxileith_fluginfo-frontend_v1.0.tar.gz
+sudo docker load -i /path/to/maxileith_fluginfo-backend_v1.0.tar.gz
 ```
 
 ## Docker Stack aufsetzen
@@ -73,19 +73,19 @@ Außerdem müssen die Labels angepasst werden, damit Traefik den Traffic korrekt
 
 **Traefik:**
 
-| label                             | Bedeutung                                                   |
+| Label                             | Bedeutung                                                   |
 | --------------------------------- | ----------------------------------------------------------- |
 | traefik.http.routers.traefik.rule | Domain, unter der das Dashboard von Traefik erreichbar ist. |
 
 **Frontend:**
 
-| label                                       | Bedeutung                                                                                                                          |
+| Label                                       | Bedeutung                                                                                                                          |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | traefik.http.routers.fluginfo-frontend.rule | Domain, unter der das Frontend erreichbar ist. Sollte identisch zu der Umgebungsvariable `FLUGINFO_BACKEND_FRONTEND_HOSTNAME` sein |
 
 **Backend:**
 
-| label                                      | Bedeutung                                                                                                                |
+| Label                                      | Bedeutung                                                                                                                |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | traefik.http.routers.fluginfo-backend.rule | Domain, unter der das Backend erreichbar ist. Sollte identisch zu der Umgebungsvariable `FLUGINFO_BACKEND_HOSTNAME` sein |
 
@@ -144,7 +144,7 @@ api.domain.tld      1800  IN  CNAME  domain.tld.
 traefik.domain.tld  1800  IN  CNAME  domain.tld.
 ```
 
-Anmerkung: Die CAA-Records sind optional und dienen die Zertifizierungsstelle von Lets's encrypt als einzige zur Ausstellung von SSL-Zertifikaten zu befugen. Wildcard-Zertifikate werden komplett untersagt. Bei Verstößen, bei denen sich ein Angreifer versucht ein Zertifikat einer unbefugten Zertifizierungsstelle ausstellen zu lassen, kann die Zertifizierungsstelle die E-Mail `mail@example.org` kontaktieren.
+Anmerkung: Die CAA-Records sind optional und dienen dazu die Zertifizierungsstelle von Lets's Encrypt als einzige zur Ausstellung von SSL-Zertifikaten zu befugen. Wildcard-Zertifikate werden komplett untersagt. Bei Verstößen, bei denen sich ein Angreifer versucht ein Zertifikat einer unbefugten Zertifizierungsstelle ausstellen zu lassen, kann die Zertifizierungsstelle die E-Mail `mail@example.org` kontaktieren.
 
 ## Starten
 
