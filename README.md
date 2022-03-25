@@ -31,9 +31,7 @@ sudo docker load -i /path/to/maxileith_fluginfo-backend_v1.0.tar.gz
 Die Definition des Docker-Stacks befindet sich in diesem Repository, weshalb dieses zuerst geklont wird:
 
 ```bash
-cd /opt
-sudo git clone https://git.leith.de/fluginfo/docker-stack.git fluginfo
-cd ./fluginfo
+sudo git clone https://git.leith.de/fluginfo/docker-stack.git /opt/fluginfo && cd /opt/fluginfo
 ```
 
 Bevor die Beispielkonfiguration angepasst wird, wird diese kopiert:
