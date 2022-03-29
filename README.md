@@ -142,7 +142,7 @@ api.domain.tld      1800  IN  CNAME  domain.tld.
 traefik.domain.tld  1800  IN  CNAME  domain.tld.
 ```
 
-Anmerkung: Die CAA-Records sind optional und dienen dazu die Zertifizierungsstelle von Lets's Encrypt als einzige zur Ausstellung von SSL-Zertifikaten zu befugen. Wildcard-Zertifikate werden komplett untersagt. Bei Verstößen, bei denen sich ein Angreifer versucht ein Zertifikat einer unbefugten Zertifizierungsstelle ausstellen zu lassen, kann die Zertifizierungsstelle die E-Mail `mail@example.org` kontaktieren.
+Anmerkung: Die CAA-Records sind optional und dienen dazu die Zertifizierungsstelle von Lets's Encrypt als einzige zur Ausstellung von SSL-Zertifikaten zu befugen. Wildcard-Zertifikate werden komplett untersagt. Bei Verstößen, bei denen ein Angreifer versucht ein Zertifikat von einer unbefugten Zertifizierungsstelle ausstellen zu lassen, kann die Zertifizierungsstelle die E-Mail `mail@example.org` kontaktieren.
 
 ## Starten
 
